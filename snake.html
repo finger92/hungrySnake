@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+    <head></head>
+    <style type="text/css">
+        
+    </style>
+<body>
+
+<canvas id="myCanvas" width="500" height="500">your browser does not support the canvas tag </canvas>
+
+<script type="text/javascript">
+window.onload=function(){
+    //初始化变量
+    var param = (function(){
+        var game_start = false;
+    
+        var cvs_w = 260;
+        var cvs_h = 260;
+        var cvs_color = 'grey';
+        var snake_color = 'white';
+        var line_width = 10;
+
+        var grid_w = 10;
+        var grid_h = 10;
+
+        var cur_loc = {
+            x:cvs_w/2,
+            y:cvs_h/2
+        }
+        
+        var map = [];
+        
+        for(var i=0;i<cvs_w/grid_w;i++){
+            map[i]= new Array();
+            for(var j=0;j<cvs_h/grid_h;j++){
+                map[i][j] = null;
+            }
+        }
+        
+        var snake = [cur_loc];
+        
+        return {
+            cvs_w:cvs_w,
+            cvs_h:cvs_h,
+            grid_w:grid_w,
+            grid_h:grid_h,
+            cur_loc:cur_loc,
+            game_start:game_start,
+            cvs_color:cvs_color,
+            snake_color:snake_color,
+            line_width:line_width,
+            map:map,
+            snake:snake
+        }
+    }())
+    
+    
+    
+    //初始化类
+    var init = (function(){
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = param.cvs_color;
+        ctx.fillRect(0,0,param.cvs_w,param.cvs_h);
+        
+        ctx.fillStyle = param.snake_color;
+        ctx.lineWidth = param.line_width;
+        ctx.beginPath();
+        ctx.moveTo(param.cur_loc.x,param.cur_loc.y);
+        ctx.lineTo(param.cur_loc.x,param.cur_loc.y);
+        ctx.stroke();
+    }());
+    
+    //动作类
+    var action = (function(){
+        return {
+            left:function(){
+                console.log('turn left');
+            },
+            up:function(){
+                console.log('turn up');
+            },
+            right:function(){
+                console.log('turn right');
+            },
+            down:function(){
+                console.log('turn down');
+            }
+        } 
+    }());
+       
+    //注册事件
+    document.onkeydown=function(){
+        if(param.game_start==false){
+            param.game_start=true;
+        }
+        var x=event.which;
+        switch(x){
+            //按了左键
+            case 37:
+                action.left();break;
+            //按了上键
+            case 38:
+                action.up();break;
+            //按了右键
+            case 39:
+                action.right();break;
+            //按了下键
+            case 40:
+                action.down();break;
+        }
+    };
+}
+
+</script>
+
+</body>
+</html>
